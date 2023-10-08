@@ -9,14 +9,14 @@ type UseSearchTrackParams = {
 };
 
 export const useSearchTrack = ({ searchTerm }: UseSearchTrackParams) => {
-  const { items } = useSpotifyAPI();
+  const { data } = useSpotifyAPI();
 
   const [searchResult, setSearchResult] = useState<Track[]>([]);
   const [selectedItem, setSelectedItem] = useState<Track>();
 
   const filterList = useCallback(() => {
     if (searchTerm) {
-      const nextResults = items.filter((track) =>
+      const nextResults = data.filter((track) =>
         includesSubstr(track.name, searchTerm)
       );
 
@@ -25,7 +25,7 @@ export const useSearchTrack = ({ searchTerm }: UseSearchTrackParams) => {
     }
 
     setSearchResult([]);
-  }, [searchTerm, items]);
+  }, [searchTerm, data]);
 
   const selectItem = (track: Track) => setSelectedItem(track);
   const removeSelectedItem = () => setSelectedItem(undefined);
