@@ -12,8 +12,8 @@ export const ComboBox = ({ items, onSelectItem }: ComboBoxProps) => {
     return null;
   }
 
-  const handleClick = (name: string) => {
-    const selectedItem = items.find((track) => track.name === name);
+  const handleClick = (id: string) => {
+    const selectedItem = items.find((track) => track.id === id);
 
     if (selectedItem) onSelectItem(selectedItem);
 
@@ -33,9 +33,9 @@ export const ComboBox = ({ items, onSelectItem }: ComboBoxProps) => {
         {items.map((track) => {
           return (
             <RenderListItem
-              key={track.name}
+              key={track.id}
               track={track}
-              onClick={() => handleClick(track.name)}
+              onClick={() => handleClick(track.id)}
             />
           );
         })}
