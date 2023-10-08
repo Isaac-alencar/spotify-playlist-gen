@@ -1,8 +1,18 @@
 import { Track } from "@/domain/Track";
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
+import { searchTrack } from "@/infra/searchTrack";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 type SpotifyAPIContextProps = {
-  items: Track[];
+  data: Track[];
+  fetchSong: (term: string) => void;
 };
 
 export const SpotifyAPIContext = createContext<SpotifyAPIContextProps>(
@@ -10,11 +20,29 @@ export const SpotifyAPIContext = createContext<SpotifyAPIContextProps>(
 );
 
 export const SpotifyAPIProvider = ({ children }: PropsWithChildren) => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchResult, setSearchResult] = useState<Track[]>([]);
+
+  const fetchSong = useCallback((term: string) => setSearchTerm(term), []);
+
+  useEffect(() => {
+    if (!searchTerm) return;
+
+    searchTrack(searchTerm)
+      .then((data) => {
+        setSearchResult(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [searchTerm]);
+
   const value = useMemo(
     () => ({
-      items,
+      data: searchResult,
+      fetchSong,
     }),
-    []
+    [searchResult, fetchSong]
   );
 
   return (
@@ -33,20 +61,3 @@ export const useSpotifyAPI = () => {
 
   return context;
 };
-
-const items = [
-  {
-    name: "Clarity",
-    artist: "John Mayer",
-    album: "heavier things",
-    albumCover:
-      "https://imusic.b-cdn.net/images/item/original/224/5099751347224.jpg?john-mayer-2003-heavier-things-cd&class=scaled&v=1091440603",
-  },
-  {
-    name: "Are you bored yet?",
-    artist: "Wallows",
-    album: "Nothing Happens",
-    albumCover:
-      "https://e.snmc.io/i/600/w/eedcdfbc92c93f9cb7c40595f3c9d8b0/9360399/wallows-nothing-happens-Cover-Art.jpg",
-  },
-];
