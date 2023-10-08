@@ -2,6 +2,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 
 import "@fontsource/roboto";
+import { SpotifyAPIProvider } from "@/providers/SpotifyAPIProvider";
 
 export const theme = extendTheme({
   fonts: {
@@ -13,8 +14,10 @@ export const theme = extendTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
-      <Component {...pageProps} theme={theme} />
-    </ChakraProvider>
+    <SpotifyAPIProvider>
+      <ChakraProvider>
+        <Component {...pageProps} theme={theme} />
+      </ChakraProvider>
+    </SpotifyAPIProvider>
   );
 }
