@@ -53,9 +53,9 @@ export const searchTrack = async (searchTerm: string): Promise<Track[]> => {
   return mapToDomainFormat(data);
 };
 
-const getAuthToken = async () => {
-  const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
-  const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+export const getAuthToken = async () => {
+  const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+  const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
 
   const BASE_URL = "https://accounts.spotify.com/api/token";
 
