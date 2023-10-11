@@ -14,7 +14,7 @@ export const SearchBar = ({ value, onChange }: SearchBarProps) => {
           onChange(e.target.value);
         }}
         type="text"
-        placeholder="Search for an artist"
+        placeholder="Search for a song"
         variant="filled"
         borderColor="blackAlpha.200"
         bg="blackAlpha.200"
