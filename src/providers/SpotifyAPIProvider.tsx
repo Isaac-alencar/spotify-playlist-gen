@@ -1,4 +1,5 @@
 import { Track } from "@/domain/Track";
+import { getPlaylistRecommendation } from "@/infra/getPlaylistRecommendation";
 import { searchTrack } from "@/infra/searchTrack";
 import {
   createContext,
@@ -10,9 +11,18 @@ import {
   useState,
 } from "react";
 
+type GeneratePlaylistParams = {
+  artistId: string;
+  limit: number;
+  genres: string[];
+  track: string;
+};
+
 type SpotifyAPIContextProps = {
   data: Track[];
+  playlistSeed: Track[];
   fetchSong: (term: string) => void;
+  generatePlaylist: (params: GeneratePlaylistParams) => Promise<void>;
 };
 
 export const SpotifyAPIContext = createContext<SpotifyAPIContextProps>(
@@ -22,8 +32,15 @@ export const SpotifyAPIContext = createContext<SpotifyAPIContextProps>(
 export const SpotifyAPIProvider = ({ children }: PropsWithChildren) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResult, setSearchResult] = useState<Track[]>([]);
+  const [playlistSeed, setPlaylistSeed] = useState<Track[]>([]);
 
   const fetchSong = useCallback((term: string) => setSearchTerm(term), []);
+
+  const generatePlaylist = async (params: GeneratePlaylistParams) => {
+    const playlist = await getPlaylistRecommendation(params);
+
+    setPlaylistSeed(playlist);
+  };
 
   useEffect(() => {
     if (!searchTerm) return;
@@ -40,9 +57,11 @@ export const SpotifyAPIProvider = ({ children }: PropsWithChildren) => {
   const value = useMemo(
     () => ({
       data: searchResult,
+      playlistSeed,
       fetchSong,
+      generatePlaylist,
     }),
-    [searchResult, fetchSong]
+    [searchResult, fetchSong, playlistSeed]
   );
 
   return (

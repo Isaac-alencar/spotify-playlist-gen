@@ -1,5 +1,5 @@
+import { Track } from "@/domain/Track";
 import { CloseButton, Container, Flex, Image, Text } from "@chakra-ui/react";
-import { Track } from "./combo-box/combo-box";
 
 type SongCardProps = {
   track: Track;
