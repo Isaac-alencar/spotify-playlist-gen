@@ -9,10 +9,10 @@ type SongCardProps = {
 export const SongCard = ({ track, removeItem }: SongCardProps) => {
   return (
     <Container
-      bg="blackAlpha.200"
+      bg="whiteAlpha.200"
       borderRadius="md"
       border="1px"
-      borderColor="blackAlpha.300"
+      borderColor="whiteAlpha.300"
       p={4}
     >
       <Flex alignItems="center" gap={4} justifyContent="space-between">

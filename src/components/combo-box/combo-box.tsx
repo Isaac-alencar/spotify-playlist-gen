@@ -25,10 +25,10 @@ export const ComboBox = ({ items, onSelectItem }: ComboBoxProps) => {
       <List
         spacing={4}
         p={4}
-        bg="blackAlpha.200"
+        bg="whiteAlpha.200"
         borderRadius="md"
         border="1px"
-        borderColor="blackAlpha.300"
+        borderColor="whiteAlpha.300"
       >
         {items.map((track) => {
           return (

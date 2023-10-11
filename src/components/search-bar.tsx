@@ -16,14 +16,14 @@ export const SearchBar = ({ value, onChange }: SearchBarProps) => {
         type="text"
         placeholder="Search for a song"
         variant="filled"
-        borderColor="blackAlpha.200"
-        bg="blackAlpha.200"
+        borderColor="whiteAlpha.200"
+        bg="whiteAlpha.200"
         color="gray.200"
         _focus={{
           borderColor: "green.200",
         }}
         _hover={{
-          bg: "blackAlpha.300",
+          bg: "whiteAlpha.300",
         }}
       />
       <Button colorScheme="green">Search</Button>

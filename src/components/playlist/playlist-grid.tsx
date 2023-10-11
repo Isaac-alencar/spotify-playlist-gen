@@ -36,10 +36,10 @@ export const PlaylistGrid = ({ playlist }: { playlist: Track[] }) => {
   return (
     <Box width="full" maxW="container.md" mx="auto" py={8}>
       <Grid
-        bg="blackAlpha.200"
+        bg="whiteAlpha.200"
         borderRadius="md"
         border="1px"
-        borderColor="blackAlpha.300"
+        borderColor="whiteAlpha.300"
         templateColumns={["1fr", null, "repeat(2, 50%)"]}
         alignItems="center"
       >
@@ -66,7 +66,11 @@ export const PlaylistGrid = ({ playlist }: { playlist: Track[] }) => {
         <Text color="gray.200" fontWeight="bold" textAlign="center">
           Didn&rsquo;t like it?
         </Text>
-        <Button colorScheme="green" variant="link" onClick={() => push("/")}>
+        <Button
+          colorScheme="green"
+          variant="link"
+          onClick={() => push("search")}
+        >
           Generate a new one!
         </Button>
       </Flex>
