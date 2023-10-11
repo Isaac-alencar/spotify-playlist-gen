@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <Flex
-      h="50vh"
+      h={["100vh", null, "50vh"]}
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
@@ -17,7 +17,8 @@ export default function Home() {
         size="4xl"
         bgGradient="linear(to-r, #1DB954, #00BFFF)"
         bgClip="text"
-        lineHeight="taller"
+        textAlign={["center", null, null]}
+        lineHeight={["normal", null, "taller"]}
       >
         Spotify Playlist Generator
       </Heading>
@@ -25,7 +26,8 @@ export default function Home() {
         color="whiteAlpha.600"
         fontWeight="bold"
         fontSize="medium"
-        maxW="40%"
+        mt={["10", null, null]}
+        maxW={["100%", null, "40%"]}
         textAlign="center"
         mb="10"
       >
@@ -34,10 +36,10 @@ export default function Home() {
         Your Perfect Soundtrack Today!
       </Text>
       <Button
-        boxShadow="2xl"
         colorScheme="green"
         bgGradient="linear(to-r, #1DB954, #00BFFF)"
         _hover={{
+          boxShadow: "2xl",
           bgGradient: "linear(to-r, #00BFFF, #1DB954)",
         }}
         onClick={() => push("search")}
