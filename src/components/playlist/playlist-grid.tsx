@@ -45,9 +45,9 @@ export const PlaylistGrid = ({ playlist }: { playlist: Track[] }) => {
       >
         {playlist.map((item) => {
           return (
-            <GridItem key={item.id} p={4}>
+            <GridItem key={item.id} p={4} overflow="hidden">
               <Flex alignItems="center" gap={4} justifyContent="space-between">
-                <Flex alignItems="center" gap={4} overflow="hidden">
+                <Flex alignItems="center" gap={4}>
                   <Image src={item.albumCover} alt={item.album} w="24" h="24" />
                   <SongInfo track={item} />
                 </Flex>

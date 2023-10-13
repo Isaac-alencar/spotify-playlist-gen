@@ -12,10 +12,10 @@ import {
 } from "react";
 
 type GeneratePlaylistParams = {
-  artistId: string;
+  artistId: string[];
   limit: number;
   genres: string[];
-  track: string;
+  track: string[];
 };
 
 type SpotifyAPIContextProps = {

@@ -12,7 +12,7 @@ export const useSearchTrack = ({ searchTerm }: UseSearchTrackParams) => {
   const { data } = useSpotifyAPI();
 
   const [searchResult, setSearchResult] = useState<Track[]>([]);
-  const [selectedItem, setSelectedItem] = useState<Track>();
+  const [selectedItems, setSelectedItems] = useState<Track[]>([]);
 
   const filterList = useCallback(() => {
     if (searchTerm) {
@@ -27,8 +27,19 @@ export const useSearchTrack = ({ searchTerm }: UseSearchTrackParams) => {
     setSearchResult([]);
   }, [searchTerm, data]);
 
-  const selectItem = (track: Track) => setSelectedItem(track);
-  const removeSelectedItem = () => setSelectedItem(undefined);
+  const selectItem = (track: Track) =>
+    setSelectedItems((old) => {
+      if (old.length >= 2) {
+        return old;
+      }
+
+      return [...old, track];
+    });
+
+  const removeSelectedItem = (track: Track) =>
+    setSelectedItems((old) => {
+      return old.filter((item) => item.id !== track.id);
+    });
 
   useEffect(() => {
     filterList();
@@ -36,7 +47,7 @@ export const useSearchTrack = ({ searchTerm }: UseSearchTrackParams) => {
 
   return {
     searchResult,
-    selectedItem,
+    selectedItems,
     selectItem,
     removeSelectedItem,
   };

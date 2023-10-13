@@ -24,7 +24,8 @@ export default function Search() {
   const { push } = useRouter();
 
   const { fetchSong, generatePlaylist } = useSpotifyAPI();
-  const { searchResult, selectedItem, selectItem, removeSelectedItem } =
+
+  const { searchResult, selectedItems, selectItem, removeSelectedItem } =
     useSearchTrack({ searchTerm });
 
   const DEBOUNCE_TIME_IN_MS = 1000;
@@ -42,15 +43,15 @@ export default function Search() {
     debouncedFetchSong(value);
   };
 
-  const handleClick = async (selectedItem: Track) => {
+  const handleClick = async (selectedItem: Track[]) => {
     setIsLoading(true);
 
     try {
       await generatePlaylist({
         limit: 10,
-        artistId: selectedItem.artistId,
-        genres: selectedItem.genres || [],
-        track: selectedItem.id,
+        artistId: selectedItems.flatMap((i) => i.artistId),
+        genres: selectedItem.flatMap((i) => i.genres),
+        track: selectedItem.map((i) => i.id),
       });
 
       push("playlist");
@@ -80,19 +81,27 @@ export default function Search() {
           setSearchTerm("");
         }}
       />
-      {selectedItem && (
+      {selectedItems.length > 0 && (
         <Container>
           <Stack spacing={6}>
             <Text color="gray.200" fontWeight="bold">
-              Selected song:
+              Selected song(s):
             </Text>
-            <SongCard track={selectedItem} removeItem={removeSelectedItem} />
+            {selectedItems.map((item) => {
+              return (
+                <SongCard
+                  key={item.id}
+                  track={item}
+                  removeItem={() => removeSelectedItem(item)}
+                />
+              );
+            })}
           </Stack>
           <Button
             w="full"
             colorScheme="green"
             my={6}
-            onClick={() => handleClick(selectedItem)}
+            onClick={() => handleClick(selectedItems)}
           >
             {isLoading ? <Spinner /> : "Generate Playlist"}
           </Button>
