@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -20,25 +20,27 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const toast = useToast();
   const { push } = useRouter();
 
   const { fetchSong, generatePlaylist } = useSpotifyAPI();
-
   const { searchResult, selectedItem, selectItem, removeSelectedItem } =
     useSearchTrack({ searchTerm });
 
   const DEBOUNCE_TIME_IN_MS = 1000;
-  const debouncedFetchSong = _.debounce(
-    (value: string) => fetchSong(value),
-    DEBOUNCE_TIME_IN_MS
-  );
+
+  const debouncedFetchSong = useMemo(() => {
+    return _.debounce(
+      (trackName: string) => fetchSong(trackName),
+      DEBOUNCE_TIME_IN_MS
+    );
+  }, [fetchSong]);
+
   const handleSearchBar = (value: string) => {
     setSearchTerm(value);
 
     debouncedFetchSong(value);
   };
-
-  const toast = useToast();
 
   const handleClick = async (selectedItem: Track) => {
     setIsLoading(true);
