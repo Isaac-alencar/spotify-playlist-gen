@@ -1,3 +1,9 @@
+type APIResponse = {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+};
+
 export const getAuthToken = async () => {
   const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
@@ -15,9 +21,8 @@ export const getAuthToken = async () => {
     body: "grant_type=client_credentials",
   };
 
-  const response = await fetch(BASE_URL, requestOptions);
-
+  const response = await fetch(`${BASE_URL}`, requestOptions);
   const data = await response.json();
 
-  return { token: data.access_token };
+  return data as APIResponse;
 };
