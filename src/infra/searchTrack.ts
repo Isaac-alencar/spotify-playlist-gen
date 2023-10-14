@@ -1,14 +1,23 @@
 import { Track } from "@/domain/Track";
+import { cacheService } from "@/services/cacheService";
+
 import { getAuthToken } from "./getApiToken";
 import { mapToDomainFormat } from "./mapToDomainFormat";
 
+type GetApiToken = ReturnType<typeof getAuthToken>;
+
 export const searchTrack = async (searchTerm: string): Promise<Track[]> => {
-  const { token } = await getAuthToken();
+  const { fetch: fetchCache } = cacheService({
+    callback: getAuthToken,
+    expirationTime: 3600,
+  });
+
+  const credentials = await fetchCache<GetApiToken>("credentials");
 
   const requestParams = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${credentials?.token_type} ${credentials?.access_token}`,
     },
   };
 
