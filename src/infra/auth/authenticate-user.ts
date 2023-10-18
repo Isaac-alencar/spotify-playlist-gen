@@ -10,16 +10,21 @@ type APIResponse = {
   expires_in: number;
 };
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 export const authenticateUser = async ({ code }: AuthenticateUserParams) => {
   const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
   const BASE_URL = "https://accounts.spotify.com/api/token";
-  const REDIRECT_URI = "http://localhost:3000/callback";
+
+  const REDIRECT_URI = isDevelopment
+    ? "http://localhost:3000/callback"
+    : process.env.NEXT_PUBLIC_CALLBACK_URI;
 
   const bodyRequest = new URLSearchParams();
   bodyRequest.append("code", code);
   bodyRequest.append("grant_type", "authorization_code");
-  bodyRequest.append("redirect_uri", REDIRECT_URI);
+  bodyRequest.append("redirect_uri", REDIRECT_URI as string);
 
   const credentials = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
