@@ -4,6 +4,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import { Layout } from "@/components/layout";
 import { SpotifyAPIProvider } from "@/providers/SpotifyAPIProvider";
+import { AuthenticationProvider } from "@/providers/AuthenticationProvider";
 
 export const theme = extendTheme({
   fonts: {
@@ -15,12 +16,14 @@ export const theme = extendTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SpotifyAPIProvider>
-      <ChakraProvider>
-        <Layout>
-          <Component {...pageProps} theme={theme} />
-        </Layout>
-      </ChakraProvider>
-    </SpotifyAPIProvider>
+    <AuthenticationProvider>
+      <SpotifyAPIProvider>
+        <ChakraProvider>
+          <Layout>
+            <Component {...pageProps} theme={theme} />
+          </Layout>
+        </ChakraProvider>
+      </SpotifyAPIProvider>
+    </AuthenticationProvider>
   );
 }

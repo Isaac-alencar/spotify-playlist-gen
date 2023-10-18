@@ -15,6 +15,7 @@ import { useSpotifyAPI } from "@/providers/SpotifyAPIProvider";
 import { useSearchTrack } from "@/hooks/useSearchTrack";
 
 import { SearchBar, ComboBox, SongCard } from "@/components";
+import { Header } from "@/components/header";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -73,6 +74,7 @@ export default function Search() {
 
   return (
     <React.Fragment>
+      <Header />
       <SearchBar value={searchTerm} onChange={handleSearchBar} />
       <ComboBox
         items={searchResult}

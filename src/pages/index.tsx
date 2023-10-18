@@ -1,13 +1,13 @@
-import { Button, Flex, Heading, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { Flex, Heading, Text } from "@chakra-ui/react";
+
+import { LogInButton } from "@/components/login-button";
+
 import React from "react";
 
 export default function Home() {
-  const { push } = useRouter();
-
   return (
     <Flex
-      h={["100vh", null, "50vh"]}
+      h={["100vh", null, null]}
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
@@ -31,21 +31,12 @@ export default function Home() {
         textAlign="center"
         mb="10"
       >
-        Unleash Your Musical Adventure Let Your Favorite Song Lead the Way. Your
-        Personal Playlist Maestro. Create Playlists Tailored to Your Taste. Find
-        Your Perfect Soundtrack Today!
+        Unleash Your Musical Adventure Let Your Favorite Song Lead the Way.
+        Create Playlists Tailored to Your Taste!
       </Text>
-      <Button
-        colorScheme="green"
-        bgGradient="linear(to-r, #1DB954, #00BFFF)"
-        _hover={{
-          boxShadow: "2xl",
-          bgGradient: "linear(to-r, #00BFFF, #1DB954)",
-        }}
-        onClick={() => push("search")}
-      >
-        Let&rsquo;s create one 🔥
-      </Button>
+      <Flex flexDir="column" alignItems="center" gap={4}>
+        <LogInButton />
+      </Flex>
     </Flex>
   );
 }
